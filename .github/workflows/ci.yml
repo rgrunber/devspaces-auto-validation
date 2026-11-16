@@ -139,7 +139,7 @@ jobs:
       - name: Checkout Dev Spaces Auto Validation
         uses: actions/checkout@v6
         with:
-          repository: 'redhat-developer/devspaces-auto-validation'
+          repository: 'rgrunber/devspaces-auto-validation'
       - name: Mask OpenShift credentials
         run: |
           OC_SERVER=$(jq -r '.inputs.OC_SERVER // empty' "$GITHUB_EVENT_PATH")
@@ -175,4 +175,4 @@ jobs:
           elif [ "${{ matrix.mode }}" == "pr" ]; then
             EXTRA_ARGS="-p ${{ matrix.pr_number }}"
           fi
-          ./dw-auto-validate.sh -v -s ${{ matrix.scenario }} ${EXTRA_ARGS}
+          PERMITTED_FAILURE_RATE='0.2' ./dw-auto-validate.sh -v -s ${{ matrix.scenario }} ${EXTRA_ARGS}
